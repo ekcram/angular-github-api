@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="search">
+        <input [(ngModel)]="username" (ngModelChange)="isValid($event)" #uname="ngModel" class="input-search"
+            placeholder="Buscar usuario de Github" type="text">
+        <button (click)="search()" class="btn-search">Buscar</button>
+    </div>
+
+    <div *ngIf="status" class="user-card">
+        <img class="photo" src="{{userData.avatar_url}}" />
+        <h3>{{userData.login | uppercase}} <br>{{userData.bio}}</h3>
+        <input *ngIf="status" [(ngModel)]="reponame" (ngModelChange)="isValid($event)" #uname="ngModel"
+            class="input-search" placeholder="Buscar repo" type="text">
+        <input type="text" [(ngModel)]="username" style="display: none;">
+        <button (click)="search()" class="btn-search">Buscar</button>
+    </div>
+
+    <div>
+        <div class="table-responsive" *ngIf="status">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Nombre del repo</th>
+                        <th width="250px">Descripción</th>
+                        <th width="250px">Repo URL</th>
+                        <th width="150px">Estrellas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let repository of repositories | filter: reponame">
+                        <td> {{repository.name}}</td>
+                        <td style="width: 150px;">{{repository.description}}</td>
+                        <td>{{repository.html_url}}</td>
+                        <td>{{repository.stargazers_count}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
